@@ -132,4 +132,4 @@ docker push ghcr.io/amerintlxperts2024/devcontainer:latest
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/amerintlxperts/devcontainers/blob/main/src/devcontainer-slim/devcontainer-template.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/zeulewan/devcontainers/blob/main/src/devcontainer-slim/devcontainer-template.json).  Add additional notes to a `NOTES.md`._

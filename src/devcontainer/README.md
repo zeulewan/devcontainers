@@ -7,7 +7,7 @@ devcontainer
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| imageVariant | Ubuntu 22.04 on amd64 or arm64 are available. | string | jammy |
+| imageVariant | Ubuntu 24.04 on amd64 or arm64 are available. | string | jammy |
 
 # devcontainer prebuild
 
@@ -133,4 +133,4 @@ docker push ghcr.io/robinmordasiewicz/devcontainer:latest
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/amerintlxperts/devcontainers/blob/main/src/devcontainer/devcontainer-template.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-template.json](https://github.com/zeulewan/devcontainers/blob/main/src/devcontainer/devcontainer-template.json).  Add additional notes to a `NOTES.md`._
