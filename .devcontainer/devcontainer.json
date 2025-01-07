@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/amerintlxperts2024/devcontainer:latest",
+  "image": "ghcr.io/zeulewan/devcontainer:latest",
   "initializeCommand": "docker pull ghcr.io/zeulewan/devcontainer:latest",
   "runArgs": [
     "--hostname=devcontainer"
