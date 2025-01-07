@@ -1,0 +1,82 @@
+---
+name: Build and Push devcontainer
+
+on:
+  repository_dispatch:
+    types: [features]
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/devcontainer/.devcontainer/devcontainer.json'
+      - 'src/devcontainer/devcontainer-template.json'
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-push:
+    timeout-minutes: 1440
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+     # - name: Free Disk Space
+     #   uses: jlumbroso/free-disk-space@main
+     #   with:
+     #     tool-cache: true
+
+     # - name: Free Disk Space Manual
+     #   run: |
+     #     sudo apt-get remove -y --allow-remove-essential aria2 shellcheck rpm xorriso \
+     #       zsync gfortran-9 nginx shim-signed imagemagick libmagickcore-dev \
+     #       libmagickwand-dev libmagic-dev ant ant-optional kubectl \
+     #       mercurial apt-transport-https unixodbc-dev yarn libssl-dev snapd \
+     #       libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+     #       snmp pollinate libpq-dev ruby-full subversion microsoft-edge-stable || true
+
+      #- name: 'Set up skopeo'
+      #  uses: warjiang/setup-skopeo@71776e03c10d767c04af8924fe5a67763f9b3d34
+
+      - name: Set up QEMU for multi-architecture builds
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3
+        with:
+          platforms: "linux/arm64,linux/amd64"
+
+      - name: Setup Docker buildx for multi-architecture builds
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb
+        with:
+          driver: docker-container
+          driver-opts: |
+            network=host
+        env:
+          BUILDX_NO_DEFAULT_ATTESTATIONS: 1
+
+      - name: Set Docker Host
+        run: echo "DOCKER_HOST=unix:///var/run/docker.sock" >> $GITHUB_ENV
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        with:
+          registry: "ghcr.io"
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build devcontainer
+        uses: devcontainers/ci@a56d055efecd725e8cfe370543b6071b79989cc8
+        with:
+          imageName: ghcr.io/${{ github.repository_owner }}/devcontainer
+          cacheFrom: ghcr.io/${{ github.repository_owner }}/devcontainer
+          subFolder: src/devcontainer
+          #platform: linux/arm64,linux/amd64
+          platform: linux/amd64
+          push: always
+        env:
+          BUILDX_NO_DEFAULT_ATTESTATIONS: 1

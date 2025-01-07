@@ -1,0 +1,22 @@
+{
+  "description": "devcontainer-slim",
+  "documentationURL": "https://github.com/amerintlxperts/templates/tree/main/src/devcontainer-slim",
+  "id": "devcontainer-slim",
+  "licenseURL": "https://github.com/amerintlxperts/templates/blob/main/LICENSE",
+  "name": "devcontainer-slim",
+  "options": {
+    "imageVariant": {
+      "default": "jammy",
+      "description": "Ubuntu 22.04 on amd64 or arm64 are available.",
+      "proposals": [
+        "jammy"
+      ],
+      "type": "string"
+    }
+  },
+  "platforms": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
+  "version": "0.0.10"
+}

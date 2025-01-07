@@ -1,0 +1,12 @@
+---
+name: info
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+    steps:
+      - name: Check IP
+        run: curl https://api.ipify.org
